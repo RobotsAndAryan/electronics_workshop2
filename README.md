@@ -1,12 +1,15 @@
 # Sensor Testing Guide (Arduino Uno)
 
 Notes and pinouts for testing the workshop sensors:
-1. **VL53L0X** — Laser Time-of-Flight (ToF) distance sensor
-2. **MFRC522** — 13.56 MHz RFID reader
-3. **MPU6050** — 6-axis accelerometer & gyroscope
-4. **HC-SR04** — Ultrasonic sonar distance sensor
-5. **Photoresistor Module (JZK LM393)** — Light intensity / brightness detector
-6. **KY-023 Joystick** — 2-axis analog thumbstick with button
+
+| # | Sensor | Description | Datasheet / Technical Reference |
+| :--- | :--- | :--- | :--- |
+| 1 | **VL53L0X** | Laser Time-of-Flight (ToF) distance sensor | [STMicroelectronics VL53L0X Datasheet (PDF)](https://www.st.com/resource/en/datasheet/vl53l0x.pdf) |
+| 2 | **MFRC522** | 13.56 MHz RFID reader | [NXP MFRC522 Datasheet (PDF)](https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf) |
+| 3 | **MPU6050** | 6-axis accelerometer & gyroscope | [TDK InvenSense MPU-6050 Product Page](https://invensense.tdk.com/products/motion-tracking/6-axis/mpu-6050/) / [Datasheet (PDF)](https://www.rlocman.ru/datasheet/pdf/MPU-6000.pdf) |
+| 4 | **HC-SR04** | Ultrasonic sonar distance sensor | [HC-SR04 Ultrasonic Sensor Datasheet (PDF)](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf) |
+| 5 | **Photoresistor Module (JZK LM393)** | Light intensity / brightness detector | [TI LM393 Dual Comparator Datasheet (PDF)](https://www.ti.com/lit/ds/symlink/lm393.pdf) |
+| 6 | **KY-023 Joystick** | 2-axis analog thumbstick with button | [Joy-IT KY-023 Module Manual & Datasheet (PDF)](https://www.joy-it.net/files/files/Produkte/COM-KY023JM/COM-KY023JM_Manual_2024-05-07.pdf) |
 
 ---
 
@@ -21,6 +24,8 @@ Notes and pinouts for testing the workshop sensors:
 
 Measures distance from ~30 mm to 2000 mm (3 cm to 2 m) over I2C.
 *(Note: If there is a small yellow/clear protective film over the sensor lens, peel it off first).*
+
+**Datasheet:** [STMicroelectronics VL53L0X Datasheet (PDF)](https://www.st.com/resource/en/datasheet/vl53l0x.pdf)
 
 **Library needed:** `Adafruit_VL53L0X` by Adafruit
 
@@ -44,6 +49,8 @@ Upload and open Serial Monitor at `115200` baud to see distance in `mm` and `cm`
 Reads the UID of 13.56 MHz RFID cards and key fobs over SPI.
 
 **IMPORTANT:** Power this board with **3.3V only**. Do not connect VCC to 5V as the chip is not 5V-power tolerant.
+
+**Datasheet:** [NXP MFRC522 Datasheet (PDF)](https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf)
 
 **Library needed:** `MFRC522` by GithubCommunity
 
@@ -69,6 +76,8 @@ On startup it prints the MFRC522 firmware version (usually `0x91` or `0x92`). Ta
 
 6-axis IMU over I2C. Outputs 3-axis acceleration in m/s² (when sitting flat on a desk, Z reads ~9.8 m/s² from gravity), 3-axis gyro rotation rate in rad/s, and chip temperature in °C.
 
+**Datasheet:** [TDK InvenSense MPU-6050 Product Page](https://invensense.tdk.com/products/motion-tracking/6-axis/mpu-6050/) | [Product Specification PDF](https://www.rlocman.ru/datasheet/pdf/MPU-6000.pdf)
+
 **Library needed:** `Adafruit MPU6050` by Adafruit (along with `Adafruit Unified Sensor` and `Adafruit BusIO`)
 
 **Wiring (I2C):**
@@ -89,6 +98,8 @@ Upload and tilt/rotate the board to check the X, Y, Z accel and gyro readings in
 ## 4. HC-SR04 Ultrasonic Sonar
 
 Measures distance (~2 cm to 400 cm) by sending a 10 us pulse on `TRIG` and timing the echo return on `ECHO` with `pulseIn()`.
+
+**Datasheet:** [HC-SR04 Ultrasonic Sensor Datasheet (PDF)](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf)
 
 **Library needed:** None (uses built-in Arduino functions)
 
@@ -114,6 +125,8 @@ Uses an LDR (photoresistor) and an LM393 comparator:
 - **3-pin modules (`VCC`, `GND`, `DO`):** Digital output `DO` switches `LOW` when bright and `HIGH` when dark. Adjust the trigger point using the onboard blue potentiometer screw.
 - **4-pin modules (`VCC`, `GND`, `DO`, `AO`):** Also includes analog pin `AO`, which outputs a continuous value from `0` (brightest) to `1023` (darkest).
 
+**Datasheet:** [Texas Instruments LM393 Dual Comparator Datasheet (PDF)](https://www.ti.com/lit/ds/symlink/lm393.pdf)
+
 **Library needed:** None
 
 **Wiring:**
@@ -133,6 +146,8 @@ Cover the LDR with your hand or shine a phone torch on it while turning the blue
 ## 6. 2-Axis Analog Joystick (KY-023)
 
 Uses two 10k potentiometers for the X and Y axes (`0–1023`, center resting value is roughly `512`) and a push button (`SW`) that connects to GND when pressed down.
+
+**Datasheet:** [Joy-IT KY-023 Joystick Module Manual & Datasheet (PDF)](https://www.joy-it.net/files/files/Produkte/COM-KY023JM/COM-KY023JM_Manual_2024-05-07.pdf)
 
 **Library needed:** None
 
