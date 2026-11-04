@@ -10,6 +10,7 @@ Notes and pinouts for testing the workshop sensors:
 | 4 | **HC-SR04** | Ultrasonic sonar distance sensor | [HC-SR04 Ultrasonic Sensor Datasheet (PDF)](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf) |
 | 5 | **Photoresistor Module (JZK LM393)** | Light intensity / brightness detector | [TI LM393 Dual Comparator Datasheet (PDF)](https://www.ti.com/lit/ds/symlink/lm393.pdf) |
 | 6 | **KY-023 Joystick** | 2-axis analog thumbstick with button | [Joy-IT KY-023 Module Manual & Datasheet (PDF)](https://www.joy-it.net/files/files/Produkte/COM-KY023JM/COM-KY023JM_Manual_2024-05-07.pdf) |
+| 7 | **DHT22 / AM2302 (DollaTek Module)** | Digital temperature & humidity sensor | [Aosong DHT22 / AM2302 Datasheet (PDF)](https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf) |
 
 ---
 
@@ -166,8 +167,33 @@ Prints `X`, `Y`, and whether the button is pressed.
 
 ---
 
+## 7. Digital Temperature & Humidity Sensor Module (DollaTek DHT22 / AM2302)
+
+*(Sold under names like "DollaTek 3Pcs Digital Temperature And Humidity Sensor Module Replace SHT11 SHT15").*
+
+Measures ambient temperature (-40°C to 80°C, ±0.5°C accuracy) and relative humidity (0–100% RH, ±2% accuracy) over a single-wire digital bus. The breakout board includes the required pull-up resistor onboard.
+*(Note: If your module has a blue plastic cage instead of white, change `#define DHTTYPE DHT22` to `#define DHTTYPE DHT11` in the sketch).*
+
+**Datasheet:** [Aosong DHT22 / AM2302 Datasheet (PDF)](https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf)
+
+**Library needed:** `DHT sensor library` by Adafruit (along with `Adafruit Unified Sensor`)
+
+**Wiring:**
+
+| DHT Module Pin | Arduino Uno      | Notes |
+| :--- | :--- | :--- |
+| VCC (`+`) | 5V (or 3.3V) | Power (3.3V–5.5V) |
+| GND (`-`) | GND | Ground |
+| OUT / DAT | Pin 2 | Single-bus digital data signal |
+
+**Sketch:** `DHT_TempHumidity_test/DHT_TempHumidity_test.ino`
+Reads and prints relative humidity (`%`), temperature (`°C` and `°F`), and heat index every 2 seconds.
+
+---
+
 ## Common Issues
 
 - **Garbled text in Serial Monitor:** Change the Serial Monitor baud rate dropdown to **`115200`**.
 - **`Failed to boot VL53L0X` / `Failed to find MPU6050`:** Check that `SDA` is on `A4` and `SCL` is on `A5` (not swapped), and make sure pin headers are connected properly (they should be)
 - **MFRC522 `0x00` or `0xFF` communication error:** Check SPI pins (`9, 10, 11, 12, 13`) and make sure `3.3V` and `GND` are connected.
+- **`Failed to read from DHT sensor!`:** Check that `OUT`/`DAT` is connected to `Pin 2`, `VCC` to `5V`, and `GND` to `GND`. If using a blue sensor (DHT11), update `DHTTYPE` to `DHT11`.
